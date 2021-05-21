@@ -20,3 +20,6 @@ C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\Loading.g.cs
 C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\Loading.baml
 C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\newTest.g.cs
 C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\newTest.baml
+C:\Users\ISSAM\source\repos\Document Viewr WPF\bin\Debug\Ookii.Dialogs.Wpf.dll
+C:\Users\ISSAM\source\repos\Document Viewr WPF\bin\Debug\Ookii.Dialogs.Wpf.pdb
+C:\Users\ISSAM\source\repos\Document Viewr WPF\bin\Debug\Ookii.Dialogs.Wpf.xml
