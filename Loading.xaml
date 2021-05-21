@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Document_Viewr_WPF"
         mc:Ignorable="d"
-        Title="Loading" Height="100" Width="50">
+        Title="Loading" Height="100" Width="50"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock Text="Loding" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Text="Loding ...." HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>

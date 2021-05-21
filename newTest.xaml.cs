@@ -1,23 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Xps.Packaging;
-using GemBox.Document;
 using System.IO;
 using word = Microsoft.Office.Interop.Word;
-using Microsoft.Win32;
 using System.Reflection;
+using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Document_Viewr_WPF
 {
@@ -27,34 +15,8 @@ namespace Document_Viewr_WPF
         {
             InitializeComponent();
         }
-        #region ConvertWordDocToXPSDoc Sync
-        private XpsDocument ConvertWordDocToXPSDoc(string wordDocName, string xpsDocName)
-        {
-            // Create a WordApplication and add Document to it
-            word.Application
-                wordApplication = new word.Application();
-
-            wordApplication.Documents.Add(wordDocName);
-            word.Document doc = wordApplication.ActiveDocument;
-            // You must ensure you have Microsoft.Office.Interop.Word.Dll version 12.
-            // Version 11 or previous versions do not have WdSaveFormat.wdFormatXPS option
-            try
-            {
-                doc.SaveAs(xpsDocName, word.WdSaveFormat.wdFormatXPS);
-                wordApplication.Quit();
-                XpsDocument xpsDoc = new XpsDocument(xpsDocName, System.IO.FileAccess.Read);
-                return xpsDoc;
-            }
-            catch (Exception exp)
-            {
-                string str = exp.Message;
-            }
-            return null;
-        }
         private XpsDocument ConvertWordDocToXPSDocUpdated(word.Document document, string xpsDocName)
         {
-            // Create a WordApplication and add Document to it
-
             // You must ensure you have Microsoft.Office.Interop.Word.Dll version 12.
             // Version 11 or previous versions do not have WdSaveFormat.wdFormatXPS option
             try
@@ -65,16 +27,18 @@ namespace Document_Viewr_WPF
             }
             catch (Exception exp)
             {
-                string str = exp.Message;
+                MessageBox.Show(exp.Message);
             }
             return null;
         }
-        #endregion
+
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
+
             string docPath = GetPathFromCurrentProject(@"Rapports\Decision_PR.docx");
             string NewdocPath = GetPathFromCurrentProject(@"Rapports\Decision_PR (generated).docx");
-            CreateWordDocument(docPath,NewdocPath,(word.Application wordApp) =>
+            
+            GenerateDocument(docPath,NewdocPath,(word.Application wordApp) =>
               {
                   FindAndReplace(wordApp, "<anne>", DateTime.Now.Year.ToString());
                   FindAndReplace(wordApp, "<societe>", "MonSociete");
@@ -85,28 +49,21 @@ namespace Document_Viewr_WPF
                   FindAndReplace(wordApp, "<domicile>", "324234");
                   FindAndReplace(wordApp, "<date>", $"{DateTime.Now.Day} / {DateTime.Now.Month} /{DateTime.Now.Year}");
               }
-              );
+            ,documentViewer1);
         }
-        //private async void SetDocumentViewer(string docPath, string newXPSDocumentName)
-        //{
-        //    Loading loading = new Loading();
-        //    loading.Show();
-        //    XpsDocument document = await ConvertWordDocToXPSDocAsync(docPath, newXPSDocumentName);
-        //    documentViewer1.Document = document.GetFixedDocumentSequence();
-        //    loading.Close();
-        //    //ConvertWordDocToXPSDoc(docPath, newXPSDocumentName).GetFixedDocumentSequence();
-        //}
         private string GetPathFromCurrentProject(string FolderOrFileName)
         {
             return $@"{Directory.GetCurrentDirectory().Replace(@"\bin\Debug", "\\")}{FolderOrFileName}";
         }
 
-
-
-
-
-
-
+        internal async void GenerateDocument(object filename, object SaveAsPath,Action<word.Application> FindAndReplace, DocumentViewer documentViewer = null)
+        {
+            Loading loading = new Loading();
+            loading.Show();
+            XpsDocument xpsDocument = await GenerateDocumentAsync(filename, SaveAsPath, FindAndReplace);
+            if (documentViewer != null) documentViewer.Document = xpsDocument.GetFixedDocumentSequence();
+            loading.Close();
+        }
         //this method will find and replace the input words
         internal void FindAndReplace(word.Application wordApp, object ToFindText, object replaceWithText)
         {
@@ -136,64 +93,50 @@ namespace Document_Viewr_WPF
                 ref matchControl);
         }
 
+
         //this method will create a new copy of the passed document word 
-        internal void CreateWordDocument(object filename, object SaveAsPath, Action<word.Application> FindAndReplace)
+        /// <summary>
+        /// this method will generate document and save it and convert it to XPS document and returnt in in a Task
+        /// </summary>
+        /// <param name="filename">the path of the document</param>
+        /// <param name="SaveAsPath">the path where you want to save your document</param>
+        /// <param name="FindAndReplace">this action allows to find and replace words in the document</param>
+        internal Task<XpsDocument> GenerateDocumentAsync(object filename, object SaveAsPath, Action<word.Application> FindAndReplace)
         {
-            MessageBox.Show("Start");
-            word.Application wordApp = new word.Application();
-            MessageBox.Show("Application a ete cree");
-            object missing = Missing.Value;
-            word.Document myWordDoc = null;
-            MessageBox.Show("Document a ete cree");
-
-            if (File.Exists((string)filename))
+            return Task.Factory.StartNew(() =>
             {
-                object readOnly = false;
-                object isVisible = false;
-                wordApp.Visible = false;
-                MessageBox.Show("start open");
-                wordApp.Documents.Add(filename);
-                myWordDoc = wordApp.ActiveDocument;
+                word.Application wordApp = new word.Application();
+                object missing = Missing.Value;
+                word.Document myWordDoc = null;
 
-                MessageBox.Show("open done");
-                //myWordDoc.Activate();
-                //find and replace
-                MessageBox.Show("start Find and replace");
-                FindAndReplace(wordApp);
-                MessageBox.Show("start Find and replace done");
-                //inserted
-                //UpdatedemyWordDoc             //Save the document
-                MessageBox.Show("Set Document a ete effectue");
-            }
-            else
-            {
-                MessageBox.Show("Document pas trouve!");
-                return;
-            }
-            myWordDoc.SaveAs2(ref SaveAsPath, ref missing, ref missing, ref missing,
-                            ref missing, ref missing, ref missing,
-                            ref missing, ref missing, ref missing,
-                            ref missing, ref missing, ref missing,
-                            ref missing, ref missing, ref missing);
-            myWordDoc.Close();
-            wordApp.Quit();
-            //object docPath = GetPathFromCurrentProject(@"Rapports\Decision_PR.docx");
+                if (File.Exists((string)filename))
+                {
+                    object readOnly = false;
+                    object isVisible = false;
+                    wordApp.Visible = false;
+                    wordApp.Documents.Add(filename);
+                    myWordDoc = wordApp.ActiveDocument;
 
-            string newXPSDocumentName = String.Concat(System.IO.Path.GetDirectoryName(SaveAsPath.ToString()), "\\",
+                    FindAndReplace(wordApp);
+                }
+                else
+                {
+                    return null;
+                }
+                myWordDoc.SaveAs2(ref SaveAsPath, ref missing, ref missing, ref missing,
+                                ref missing, ref missing, ref missing,
+                                ref missing, ref missing, ref missing,
+                                ref missing, ref missing, ref missing,
+                                ref missing, ref missing, ref missing);
 
-                            System.IO.Path.GetFileNameWithoutExtension(SaveAsPath.ToString()), ".xps");
+                string newXPSDocumentName = String.Concat(Path.GetDirectoryName(filename.ToString()), "\\",
+                                System.IO.Path.GetFileNameWithoutExtension(filename.ToString()), ".xps");
 
-
-            word.Application wordApplication = new word.Application();
-
-            wordApplication.Documents.Add(SaveAsPath);
-            word.Document doc = wordApplication.ActiveDocument;
-
-            XpsDocument document = ConvertWordDocToXPSDoc(SaveAsPath.ToString(), newXPSDocumentName);
-            documentViewer1.Document = document.GetFixedDocumentSequence();
-            doc.Close();
-            wordApplication.Quit();
-            MessageBox.Show("Document A ete cree!");
+                XpsDocument xpsDocument = ConvertWordDocToXPSDocUpdated(myWordDoc, newXPSDocumentName);
+                myWordDoc.Close();
+                wordApp.Quit();
+                return xpsDocument;
+            });
         }
     }
 }

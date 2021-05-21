@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Document_Viewr_WPF"
         mc:Ignorable="d"
-        Title="newTest" Height="450" Width="800">
+        Title="newTest" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <DocumentViewer HorizontalAlignment="Left" Margin="0,42,0,0"
 
