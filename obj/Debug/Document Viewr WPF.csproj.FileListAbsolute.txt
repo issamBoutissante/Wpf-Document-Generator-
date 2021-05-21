@@ -1,0 +1,22 @@
+C:\Users\ISSAM\source\repos\Document Viewr WPF\bin\Debug\Document Viewr WPF.exe.config
+C:\Users\ISSAM\source\repos\Document Viewr WPF\bin\Debug\Document Viewr WPF.exe
+C:\Users\ISSAM\source\repos\Document Viewr WPF\bin\Debug\Document Viewr WPF.pdb
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\Document Viewr WPF.csprojAssemblyReference.cache
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\MainWindow.g.cs
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\App.g.cs
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\Document Viewr WPF_MarkupCompile.cache
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\Document Viewr WPF_MarkupCompile.lref
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\MainWindow.baml
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\Document Viewr WPF.g.resources
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\Document_Viewr_WPF.Properties.Resources.resources
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\Document Viewr WPF.csproj.GenerateResource.cache
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\Document Viewr WPF.csproj.CoreCompileInputs.cache
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\Document Viewr WPF.exe
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\Document Viewr WPF.pdb
+C:\Users\ISSAM\source\repos\Document Viewr WPF\bin\Debug\GemBox.Document.dll
+C:\Users\ISSAM\source\repos\Document Viewr WPF\bin\Debug\GemBox.Document.xml
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\Document Viewr WPF.csproj.CopyComplete
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\Loading.g.cs
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\Loading.baml
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\newTest.g.cs
+C:\Users\ISSAM\source\repos\Document Viewr WPF\obj\Debug\newTest.baml
