@@ -68,7 +68,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DocumentGenerator.cs" />
-    <Compile Include="Rapport.cs" />
+    <Compile Include="RapportPath.cs" />
     <Page Include="Loading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
